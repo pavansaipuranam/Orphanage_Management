@@ -1,0 +1,356 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block title %}Adoption Form - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+    }
+
+    .adoption-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section {
+        position: relative;
+        height: 40vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-section {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        color: #2a5298;
+        margin-bottom: 40px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #1e3c72, #2a5298);
+        border-radius: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        color: #2a5298;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+    }
+
+    .form-control:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
+        outline: none;
+        background-color: #ffffff;
+    }
+
+    .form-control-file {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px dashed #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+
+    .form-control-file:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.1);
+        outline: none;
+    }
+
+    .form-text {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 8px;
+        font-style: italic;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 15px 35px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: #ffffff;
+    }
+
+    .btn-reset {
+        background: linear-gradient(135deg, #e50914 0%, #ff0000 100%);
+        color: #ffffff;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .alert {
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        color: #ffffff;
+    }
+
+    .alert-danger {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: #ffffff;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .form-section {
+            padding: 30px;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+        }
+    }
+</style>
+
+<div class="adoption-container">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Adoption Form</h1>
+            <p class="hero-subtitle">Help us create loving families through adoption</p>
+        </div>
+    </div>
+
+    {% if error == "no" %}
+    <div class="alert alert-success" role="alert">
+        Your message has been sent successfully!
+    </div>
+    {% endif %}
+
+    {% if error == "yes" %}
+    <div class="alert alert-danger" role="alert">
+        Something went wrong. Please try again.
+    </div>
+    {% endif %}
+
+    <div class="form-section">
+        <h2 class="form-title">Adoption Details</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label>Contact Number</label>
+                    <input type="text" name="contact_number" class="form-control" placeholder="Contact Number" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label for="aadhaar_number">Aadhaar Card Number</label>
+                    <input type="text" class="form-control" id="aadhaar_number" name="aadhaar_number" placeholder="Aadhaar Number" required>
+                    <small class="form-text">Please enter a valid Aadhaar card number (12 digits)</small>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label>Email Id</label>
+                    <input type="email" name="email" class="form-control" placeholder="Email ID" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation" class="form-control" placeholder="Enter Source of income" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label>Monthly Income</label>
+                    <input type="text" name="monthly_income" class="form-control" placeholder="Monthly Income In (RS)" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label for="have_child">Do you have child?</label>
+                    <input type="text" class="form-control" id="have_child" name="have_child" placeholder="Yes/No" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-12 col-sm-12">
+                    <label for="medical_report">Medical Report</label>
+                    <input type="file" class="form-control-file" id="medical_report" name="medical_report" required>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-submit">Submit</button>
+                <button type="reset" class="btn btn-reset">Clear</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+<script>
+    // Aadhar Card Number Validation
+    const aadharInput = document.getElementById('aadhaar_number');
+    const aadharHelp = document.querySelector('#aadhaar_number + .form-text');
+
+    aadharInput.addEventListener('input', function () {
+        const value = this.value.trim();
+        if (/^\d{12}$/.test(value)) {
+            aadharInput.classList.remove('is-invalid');
+            aadharInput.classList.add('is-valid');
+            aadharHelp.textContent = 'Valid Aadhar card number.';
+            aadharHelp.style.color = '#28a745';
+        } else {
+            aadharInput.classList.remove('is-valid');
+            aadharInput.classList.add('is-invalid');
+            aadharHelp.textContent = 'Please enter a valid Aadhar card number (12 digits).';
+            aadharHelp.style.color = '#dc3545';
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'html/base.html' %}
+{% block title %}Send Email - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .email-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .email-card {
+        background-color: #ffffff;
+        max-width: 600px;
+        width: 100%;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .email-title {
+        font-size: 2rem;
+        color: #2a5298;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .email-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #2a5298, #1e3c72);
+        border-radius: 3px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        color: #2a5298;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: #495057;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        outline: none;
+    }
+
+    .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .send-btn {
+        background-color: #2a5298;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .send-btn:hover {
+        background-color: #1e3c72;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .success-message {
+        color: #28a745;
+        font-size: 1rem;
+        margin-top: 15px;
+        text-align: center;
+        padding: 10px;
+        background-color: rgba(40, 167, 69, 0.1);
+        border-radius: 8px;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .email-card {
+            padding: 30px 20px;
+        }
+
+        .email-title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<div class="email-container">
+    <div class="email-card">
+        <h2 class="email-title">Send Email</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-message">
+                    {{ field.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="success-message">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <button type="submit" class="send-btn">Send Email</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

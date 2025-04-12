@@ -1,0 +1,132 @@
+{% extends 'html/base.html' %}
+{% block title %}Logout - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .logout-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background-color: #f8f9fa;
+    }
+
+    .logout-card {
+        background-color: #ffffff;
+        max-width: 400px;
+        width: 100%;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .logout-icon {
+        font-size: 4rem;
+        color: #2a5298;
+        margin-bottom: 20px;
+        animation: scaleIn 0.5s ease-out;
+    }
+
+    .logout-title {
+        font-size: 2rem;
+        color: #2a5298;
+        margin-bottom: 15px;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .logout-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #2a5298, #1e3c72);
+        border-radius: 3px;
+    }
+
+    .logout-message {
+        font-size: 1.1rem;
+        color: #495057;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .login-again-btn {
+        display: inline-block;
+        background-color: #2a5298;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .login-again-btn:hover {
+        background-color: #1e3c72;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .logout-card {
+            padding: 30px 20px;
+        }
+
+        .logout-title {
+            font-size: 1.8rem;
+        }
+
+        .logout-message {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="logout-container">
+    <div class="logout-card">
+        <i class="fas fa-sign-out-alt logout-icon"></i>
+        <h1 class="logout-title">Logged Out</h1>
+        <p class="logout-message">You have been successfully logged out. Would you like to login again?</p>
+        <a href="{% url 'lg' %}" class="login-again-btn">Login Again</a>
+    </div>
+</div>
+{% endblock %}

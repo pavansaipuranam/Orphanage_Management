@@ -1,0 +1,131 @@
+{% load static %}
+
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+ 
+<st>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="{% url 'hm' %}">
+    <img src="{% static 'images/logo.jpeg' %}" class="rounded-circle" style="width:30px">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav pl-5 text-center">
+     {% if not user.is_authenticated %}
+     <li class="nav-item">
+       <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'hm' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+     </li>
+     <!-- <li class="nav-item">
+       <a class="nav-link {% if request.path == '/vhome/' %}active{% endif %}" href="{% url 'vhome' %}"><ion-icon style="margin-right:1px" name="home-sharp"></ion-icon>Volenteer Home</a>
+     </li> -->
+
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/abt/' %}active{% endif %}" href="{% url 'ab' %}"><i class="fa fa-fw fa-book"></i>About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/cnt/' %}active{% endif %}" href="{% url 'ct' %}"><i class="fa fa-fw fa-phone fa-1x" aria-hidden="true" style="margin-right:2px"></i>Contact</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/reg/' %}active{% endif %}" href="{% url 'rg' %}"><i class="fa fa-fw fa-user-plus"></i>Register</a>
+      </li>
+
+      
+       <li class="nav-item">
+       <a class="nav-link {% if request.path == '/event-booking/' %}active{% endif %}" href="{% url 'eb' %}"><i class="fa fa-fw fa-vcard"></i>Book Event</a>
+     </li>
+
+     <li class="nav-item">
+       <a class="nav-link {% if request.path == '/adlog/' %}active{% endif %}" href="{% url 'adp' %}"><i class="fa fa-fw fa-handshake-o"></i>Adoptent</a>
+     </li>
+     
+     <li class="nav-item">
+      <a class="nav-link {% if request.path == '/volenteer-login/' %}active{% endif %}" href="{% url 'volenteer_login' %}"><i class="fa fa-fw fa-vcard"></i>Volunteer</a>
+    </li>
+     
+
+
+     
+     
+     {% else %}
+     
+     <li class="nav-item">
+       <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'hm' %}"><i style="margin-right:1px" name="home-sharp"></i> Home</a>
+     </li>
+
+     
+
+     {% if request.user.role_type == '1' %}
+     {% if request.user.is_addoptent == 1 %}
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/orphan_details/' %}active{% endif %}" href="{% url 'orphan_details' %}">Orphans details</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/add/' %}active{% endif %}" href="{% url 'add' %}">Adoptent Form</a>
+      </li>
+
+
+
+     {% endif %}
+     {% elif request.user.role_type == '2' %}
+     {% if request.user.has_orphanage == 1 %}
+     <li class="nav-item">
+        <a class="nav-link {% if request.path == '/add_orphan' %}active{% endif %}" href="{% url 'add_orphan' %}">Add Orphan</a>
+      </li>
+     <li class="nav-item">
+       <a class="nav-link {% if request.path == '/requested_events' %}active{% endif %}" href="{% url 'requested_events' %}">Requested Events</a>
+     </li>
+      
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/confirmed_events' %}active{% endif %}" href="{% url 'confirmed_events' %}">Confirmed events</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/adoptent-login-list/' %}active{% endif %}" href="{% url 'adoptent_login_list' %}">Adoptent Login List</a>
+      </li>
+
+      <li class="nav-item">
+       <a class="nav-link" href="{% url 'send_email' %}"><i class="fa fa-fw fa-envelope"></i>email</a>
+     </li>
+
+     {% else %}
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/orcr/' %}active{% endif %}" href="{% url 'orcr' %}">Orphanage</a>
+      </li>
+      {% endif %}
+
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="">Not registered!</a>
+      </li>
+      {% endif %}
+      {% endif %}
+     </div>
+     {% if user.is_authenticated %}
+     <div class="dropdown">
+     <a class="nav-link  dropdown-toggle text-light "data-toggle="dropdown">Welcome {{request.user.username}}
+     </a>
+      <div class="dropdown-menu">
+       
+       <a class="dropdown-item  {% if request.path == '/lgt' %}active{% endif %}" href="{% url 'lgtn' %}">Logout</a>
+      </div>
+    </div>
+     {% else %}
+     
+      
+     <div class="nav-item auto-ml">
+        
+        <a  class="nav-link {% if request.path == '/lgo/' %}active{% endif %}"  href="{% url 'lg' %}" style="color: whitesmoke;"><i class="fa fa-fw fa-user-circle-o"></i>Login</a>
+     </div>
+
+      {% endif %}
+    
+    </ul>
+  </div>  
+</nav>

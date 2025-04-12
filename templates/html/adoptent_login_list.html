@@ -1,0 +1,245 @@
+{% extends 'html/base.html' %}
+{% block title %}Adoptent Login List - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .adoptent-container {
+        min-height: 100Px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #87CEEB, #1E90FF);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .adoptent-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+    }
+
+    .adoptent-header {
+        background: linear-gradient(135deg, rgba(42, 82, 152, 0.9), rgba(30, 60, 114, 0.9));
+        padding: 40px 20px;
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInDown 0.5s ease-out;
+        position: relative;
+        z-index: 1;
+    }
+
+    .adoptent-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .adoptent-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .adoptent-card {
+        background: rgba(255, 255, 255, 0.95);
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.5s ease-out;
+        position: relative;
+        z-index: 1;
+    }
+
+    .adoptent-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .adoptent-table th {
+        background: #2a5298;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .adoptent-table td {
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+        color: #495057;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+    .adoptent-table tr:hover td {
+        background-color: #f8f9fa;
+    }
+
+    .adoptent-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .medical-link {
+        color: #2a5298;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .medical-link:hover {
+        color: #1e3c72;
+        text-decoration: underline;
+    }
+
+    .action-form {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .delete-btn {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .adoptent-container {
+            padding: 20px 15px;
+        }
+
+        .adoptent-header {
+            padding: 30px 15px;
+        }
+
+        .adoptent-title {
+            font-size: 2rem;
+        }
+
+        .adoptent-card {
+            padding: 20px;
+        }
+
+        .adoptent-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        
+        .adoptent-table th,td {
+            padding: 12px;
+        }
+
+        .delete-btn {
+            padding: 6px 15px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<div class="adoptent-container">
+    <div class="adoptent-header">
+        <h1 class="adoptent-title">Adoptent Login List</h1>
+        <p class="adoptent-subtitle">View and manage adoption records</p>
+    </div>
+    <div class="adoptent-card">
+        <div class="table-responsive">
+            <table class="adoptent-table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Contact Number</th>
+                        <th>Aadhaar Number</th>
+                        <th>Email</th>
+                        <th>Monthly Income</th>
+                        <th>Medical Report</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.full_name }}</td>
+                        <td>{{ record.contact_number }}</td>
+                        <td>{{ record.aadhaar_number }}</td>
+                        <td>{{ record.email }}</td>
+                        <td>{{ record.monthly_income }}</td>
+                        <td>
+                            {% if record.medical_report %}
+                            <a href="{{ record.medical_report.url }}" target="_blank" class="medical-link">View Medical Report</a>
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="{% url 'delete_record' record.id %}" method="post" class="action-form">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

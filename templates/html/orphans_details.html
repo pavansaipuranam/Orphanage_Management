@@ -1,0 +1,186 @@
+{% extends 'html/base.html' %}
+{% block title %}Orphan Details - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .orphans-container {
+        min-height: 100vh;
+        padding: 40px 20px;
+        background-color: #f8f9fa;
+    }
+
+    .orphans-header {
+        background: linear-gradient(135deg, #2a5298, #1e3c72);
+        padding: 40px 20px;
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeInDown 0.5s ease-out;
+    }
+
+    .orphans-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .orphans-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .orphans-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 20px;
+    }
+
+    .orphan-card {
+        background-color: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .orphan-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .orphan-card-header {
+        background: linear-gradient(135deg, #2a5298, #1e3c72);
+        padding: 20px;
+        color: white;
+        border-bottom: 2px solid #ff9800;
+    }
+
+    .orphan-card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .orphan-card-body {
+        padding: 25px;
+    }
+
+    .orphan-detail {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .orphan-detail:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .detail-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+    .detail-value {
+        font-size: 1.1rem;
+        color: #2a5298;
+        font-weight: 500;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .orphans-container {
+            padding: 20px 15px;
+        }
+
+        .orphans-header {
+            padding: 30px 15px;
+        }
+
+        .orphans-title {
+            font-size: 2rem;
+        }
+
+        .orphans-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+</style>
+
+<div class="orphans-container">
+    <div class="orphans-header">
+        <h1 class="orphans-title">Details Of The Orphan Children</h1>
+        <p class="orphans-subtitle">View information about our children</p>
+    </div>
+
+    <div class="orphans-grid">
+        {% for orphan in h %}
+        <div class="orphan-card">
+            <div class="orphan-card-header">
+                <h2 class="orphan-card-title">Orphan Details</h2>
+            </div>
+            <div class="orphan-card-body">
+                <div class="orphan-detail">
+                    <div class="detail-label">Name</div>
+                    <div class="detail-value">{{ orphan.name }}</div>
+                </div>
+                <div class="orphan-detail">
+                    <div class="detail-label">Gender</div>
+                    <div class="detail-value">{{ orphan.gender }}</div>
+                </div>
+                <div class="orphan-detail">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">{{ orphan.age }}</div>
+                </div>
+                <div class="orphan-detail">
+                    <div class="detail-label">Father's Name</div>
+                    <div class="detail-value">{{ orphan.father_name }}</div>
+                </div>
+                <div class="orphan-detail">
+                    <div class="detail-label">Mother's Name</div>
+                    <div class="detail-value">{{ orphan.mother_name }}</div>
+                </div>
+                <div class="orphan-detail">
+                    <div class="detail-label">Date of Birth</div>
+                    <div class="detail-value">{{ orphan.date_of_birth }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

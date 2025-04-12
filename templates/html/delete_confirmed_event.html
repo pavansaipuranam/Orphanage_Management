@@ -1,0 +1,182 @@
+{% extends 'html/base.html' %}
+{% block title %}Delete Event - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .delete-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .delete-card {
+        background-color: #ffffff;
+        max-width: 600px;
+        width: 100%;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .delete-title {
+        font-size: 2rem;
+        color: #2a5298;
+        margin-bottom: 20px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .delete-message {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .event-details {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .event-detail {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .event-label {
+        font-weight: 600;
+        color: #2a5298;
+        width: 120px;
+    }
+
+    .event-value {
+        color: #666;
+        flex: 1;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    .cancel-btn {
+        background-color: #6c757d;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .cancel-btn:hover {
+        background-color: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .delete-card {
+            padding: 30px 20px;
+        }
+
+        .delete-title {
+            font-size: 1.8rem;
+        }
+
+        .event-detail {
+            flex-direction: column;
+        }
+
+        .event-label {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .delete-btn, .cancel-btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <div class="delete-card">
+        <h2 class="delete-title">Delete Confirmed Event</h2>
+        <p class="delete-message">Are you sure you want to delete this confirmed event? This action cannot be undone.</p>
+        
+        <div class="event-details">
+            <div class="event-detail">
+                <span class="event-label">Name:</span>
+                <span class="event-value">{{ confirmed_event.name }}</span>
+            </div>
+            <div class="event-detail">
+                <span class="event-label">Contact:</span>
+                <span class="event-value">{{ confirmed_event.contact }}</span>
+            </div>
+            <div class="event-detail">
+                <span class="event-label">Event Date:</span>
+                <span class="event-value">{{ confirmed_event.event_date }}</span>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="button-group">
+                <input type="submit" value="Delete" class="delete-btn">
+                <a href="/" class="cancel-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

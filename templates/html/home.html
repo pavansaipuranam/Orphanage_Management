@@ -1,0 +1,569 @@
+{% extends 'html/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .hero-section {
+      width: 100%;
+      height: 600px;
+      position: relative;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      border: none;
+    }
+
+    .hero-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 800px;
+    }
+
+    .hero-subtitle {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      max-width: 95%;
+      margin: 2rem auto;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider {
+      display: flex;
+      aspect-ratio: 16 / 6;
+      overflow-x: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+    }
+
+    .slider img {
+      flex: 1 0 100%;
+      scroll-snap-align: start;
+      object-fit: cover;
+      max-width: 100%;
+      animation: slide 20s infinite;
+      transform: translateX(0);
+    }
+
+    .slider-nav {
+      display: flex;
+      column-gap: 1rem;
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .slider-nav a {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background-color: #ffffff;
+      opacity: 0.75;
+      transition: all 0.3s ease;
+    }
+
+    .slider-nav a:hover {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .features {
+        display: flex;
+        justify-content: space-between;
+      padding: 4rem 2rem;
+      gap: 2rem;
+      background-color: #ffffff;
+      flex-wrap: wrap;
+    }
+    
+    .feature {
+      flex: 1;
+      min-width: 300px;
+      background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+    
+    .feature h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .feature p {
+      color: #ffffff;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #ffffff;
+      color: #2a5298;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid #ffffff;
+    }
+
+    .cta-button:hover {
+      background-color: transparent;
+      color: #ffffff;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .stats-section {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      padding: 4rem 2rem;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .success-stories {
+      padding: 4rem 2rem;
+      background-color: #ffffff;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .story-card {
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .story-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .story-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .story-content {
+      padding: 1.5rem;
+    }
+
+    .story-content h3 {
+      color: #2a5298;
+      margin-bottom: 1rem;
+    }
+
+    .story-content p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .social-media {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background-color: #ffffff;
+    }
+
+    .social-media i {
+      font-size: 1.8rem;
+      color: #2a5298;
+      transition: all 0.3s ease;
+    }
+
+    .social-media i:hover {
+      color: #1e3c72;
+      transform: scale(1.2);
+    }
+
+    .section-title {
+      text-align: center;
+      color: #2a5298;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: #2a5298;
+      margin: 1rem auto;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: #ffffff;
+      padding: 4rem 2rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-section {
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 2px;
+      background-color: #ffffff;
+    }
+
+    .footer-section p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      transform: translateX(5px);
+    }
+
+    .contact-info {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact-info li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .contact-info i {
+      margin-right: 1rem;
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media only screen and (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .features {
+        flex-direction: column;
+        padding: 2rem 1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .footer {
+        padding: 3rem 1rem 1rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .contact-info li {
+        justify-content: center;
+      }
+    }
+    </style>
+
+  <div class="hero-section">
+    <img class="hero-image" src="../static/images/titile.jpg" alt="title">
+    <h1 class="hero-title">TERESA ORPHANAGE MANAGEMENT</h1>
+    <p class="hero-subtitle">"Orphans are diamonds in rough, let's shape and polish"</p>
+  </div>
+
+    <section class="container">
+  <div class="slider-wrapper">
+    <div class="slider">
+        <img id="slide-1" src="../static/images/okati.jpg" alt="Slide 1">
+        <img id="slide-2" src="../static/images/child.jpg" alt="Slide 2">
+        <img id="slide-3" src="../static/images/rendu.jpg" alt="Slide 3">
+        <img id="slide-4" src="../static/images/as-in-uk.jpg" alt="Slide 4">
+</div>
+<div class="slider-nav">
+        <a href="#slide-1"></a>
+        <a href="#slide-2"></a>
+        <a href="#slide-3"></a>
+        <a href="#slide-4"></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Children Helped</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Successful Adoptions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Volunteers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Years of Service</div>
+  </div>
+</div>
+</section>
+  
+    <section class="features">
+        <div class="feature">
+            <h2><a href="{% url 'adp' %}" class="cta-button">Adopt a Child</a></h2>
+      <p>Give a child the gift of a loving family. Adoption is a beautiful journey that changes lives forever.</p>
+        </div>
+
+    <div class="feature">
+      <h2><a href="{% url 'ct' %}" class="cta-button">Make an Enquiry</a></h2>
+      <p>Learn more about our children and how you can support their journey towards a brighter future.</p>
+          </div>
+
+    <div class="feature">
+      <h2><a href="#" class="cta-button">Donate Now</a></h2>
+      <p>Your contribution can make a difference in a child's life. Every donation helps provide better care and opportunities.</p>
+    </div>
+
+        <div class="feature">
+      <h2><a href="#" class="cta-button">Volunteer</a></h2>
+      <p>Join our community of volunteers and make a direct impact in the lives of our children through your time and skills.</p>
+    </div>
+  </section>
+
+  <section class="success-stories">
+    <h2 class="section-title">Success Stories</h2>
+    <div class="stories-grid">
+      <div class="story-card">
+        <img src="../static/images/child.jpg" alt="Success Story 1" class="story-image">
+        <div class="story-content">
+          <h3>Rahul's Journey</h3>
+          <p>From a difficult start to finding his forever family, Rahul's story inspires hope and determination.</p>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="../static/images/okati.jpg" alt="Success Story 2" class="story-image">
+        <div class="story-content">
+          <h3>Priya's Success</h3>
+          <p>Through education and support, Priya overcame challenges to achieve her dreams of becoming a teacher.</p>
+        </div>
+      </div>
+      <div class="story-card">
+        <img src="../static/images/rendu.jpg" alt="Success Story 3" class="story-image">
+        <div class="story-content">
+          <h3>Amit's Achievement</h3>
+          <p>Amit's journey from our orphanage to becoming a successful entrepreneur shows the power of belief and support.</p>
+        </div>
+      </div>
+        </div>
+    </section>    
+
+  <div class="social-media">
+    <i class="fa fa-facebook-square" aria-hidden="true"></i>
+    <i class="fa fa-instagram" aria-hidden="true"></i>
+    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+    <i class="fa fa-twitter-square"></i>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>Teresa Orphanage Management is dedicated to providing love, care, and opportunities to children in need. We believe every child deserves a chance to thrive and reach their full potential.</p>
+        <div class="social-media">
+          <i class="fa fa-facebook-square" aria-hidden="true"></i>
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+          <i class="fa fa-whatsapp" aria-hidden="true"></i>
+          <i class="fa fa-twitter-square"></i>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="{% url 'adp' %}">Adopt a Child</a></li>
+          <li><a href="{% url 'ct' %}">Make an Enquiry</a></li>
+          <li><a href="#">Donate Now</a></li>
+          <li><a href="#">Volunteer</a></li>
+          <li><a href="#">Success Stories</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <ul class="contact-info">
+          <li>
+            <i class="fa fa-map-marker"></i>
+            <span>123 Orphanage Street, City, State, Country</span>
+          </li>
+          <li>
+            <i class="fa fa-phone"></i>
+            <span>+1 234 567 8900</span>
+          </li>
+          <li>
+            <i class="fa fa-envelope"></i>
+            <span>info@teresorphanage.org</span>
+          </li>
+          <li>
+            <i class="fa fa-clock-o"></i>
+            <span>Mon - Fri: 9:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Newsletter</h3>
+        <p>Subscribe to our newsletter to receive updates about our children and upcoming events.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px;">
+          <button type="submit" class="cta-button" style="width: 100%;">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 Teresa Orphanage Management. All rights reserved.</p>
+    </div>
+  </footer>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+{% endblock %}

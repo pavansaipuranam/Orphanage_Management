@@ -1,0 +1,240 @@
+{% extends 'html/base.html' %}
+{% block title %}Volunteer Login - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .login-container {
+        min-height: 100vh;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #87CEEB, #1E90FF);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+    }
+
+    .login-header {
+        background: linear-gradient(135deg, rgba(42, 82, 152, 0.9), rgba(30, 60, 114, 0.9));
+        padding: 40px 20px;
+        text-align: center;
+        color: white;
+        margin-bottom: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInDown 0.5s ease-out;
+        position: relative;
+        z-index: 1;
+    }
+
+    .login-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .login-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.5s ease-out;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .login-card-header {
+        background: linear-gradient(135deg, #2a5298, #1e3c72);
+        padding: 25px;
+        color: white;
+        text-align: center;
+    }
+
+    .login-card-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .login-card-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        color: #2a5298;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        color: #495057;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        outline: none;
+        background-color: white;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .submit-btn,
+    .reset-btn {
+        flex: 1;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn {
+        background-color: #2a5298;
+        color: white;
+    }
+
+    .submit-btn:hover {
+        background-color: #1e3c72;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
+    }
+
+    .reset-btn {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .reset-btn:hover {
+        background-color: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .login-container {
+            padding: 20px 15px;
+        }
+
+        .login-header {
+            padding: 30px 15px;
+        }
+
+        .login-title {
+            font-size: 2rem;
+        }
+
+        .login-card {
+            padding: 20px;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="login-title">Volunteer Login</h1>
+        <p class="login-subtitle">Access your volunteer account</p>
+    </div>
+
+    <div class="login-card">
+        <div class="login-card-header">
+            <h2 class="login-card-title">Login</h2>
+        </div>
+        <div class="login-card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="error-message">
+                        {{ field.errors.0 }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Login</button>
+                    <button type="reset" class="reset-btn">Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block title %}About Us - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .about-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        color: #2a5298;
+    }
+
+    .hero-section {
+        position: relative;
+        height: 60vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('{% static "images/about.jpg" %}') center/cover;
+        opacity: 0.3;
+        z-index: -1;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 20px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .content-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #2a5298;
+        position: relative;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: #2a5298;
+    }
+
+    .mission-statement {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .mission-statement p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #666;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .content-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .content-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .content-text {
+        padding: 20px;
+    }
+
+    .content-text h3 {
+        color: #2a5298;
+        margin-bottom: 15px;
+    }
+
+    .content-text p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .stats-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 40px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        color: #ffffff;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+    }
+
+    .social-section {
+        text-align: center;
+        padding: 40px 20px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .social-icons i {
+        font-size: 2rem;
+        color: #2a5298;
+        transition: all 0.3s ease;
+    }
+
+    .social-icons i:hover {
+        color: #1e3c72;
+        transform: scale(1.2);
+    }
+
+    .cta-section {
+        text-align: center;
+        padding: 40px;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border-radius: 15px;
+        margin-top: 40px;
+        color: #ffffff;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: #ffffff;
+        color: #2a5298;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid #ffffff;
+    }
+
+    .cta-button:hover {
+        background-color: transparent;
+        color: #ffffff;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    @media only screen and (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+
+<div class="about-container">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">About Teresa Orphanage</h1>
+            <p class="hero-subtitle">"If we can conquer Moon, we can also conquer orphan crisis"</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="mission-statement">
+            <p>Let's lay the foundation of orphan welfare by promoting their education, health, and safety! Our main aim is to address and solve all current and potential issues faced by orphan children. Partnering with organizations and public support groups, we organize multiple programs with constant strife to promote the welfare of orphans.</p>
+        </div>
+
+        <h2 class="section-title">Our Vision</h2>
+        <div class="content-grid">
+            <div class="content-card">
+                <img src="{% static 'images/ideology.jpej.png' %}" alt="Ideology" class="content-image">
+                <div class="content-text">
+                    <h3>Our Ideology</h3>
+                    <p>To give orphan children the shelter and love that they deserve, our talented organizational members and partners work together in close harmony to deliver a wide range of services. We encourage families and support communities to cater to the unique needs of the orphan children.</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <img src="{% static 'images/history.jpeg' %}" alt="History" class="content-image">
+                <div class="content-text">
+                    <h3>Our History</h3>
+                    <p>Founded in 2021, our orphanage was established with the goal of making a positive impact on the lives of orphaned children. Over the years, we have helped countless children find hope and happiness.</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <img src="{% static 'images/mission.jpg' %}" alt="Mission" class="content-image">
+                <div class="content-text">
+                    <h3>Our Mission</h3>
+                    <p>At our orphanage, we are dedicated to providing a safe and nurturing environment for orphaned children. Our mission is to give them a brighter future by offering them love, care, education, and opportunities.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Children Helped</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Successful Adoptions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Volunteers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Years of Service</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="social-section">
+            <p>The challenges faced by orphan children on a daily basis shape their personality. This is why we focus on providing them with a better future. To continue to thrive as an organization, we don't dwell in the past and present. Continuously identifying and understanding the challenges of orphans, we reshape our strategies to achieve better results every day.</p>
+            <div class="social-icons">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-instagram"></i>
+                <i class="fa fa-whatsapp"></i>
+                <i class="fa fa-twitter-square"></i>
+            </div>
+            <p>A tiny seed sown by each of us can grow a beautiful garden. Let's join hands to support orphan children and their families.</p>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="section-title" style="color: #ffffff;">Join Our Mission</h2>
+            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">Be part of our journey to make a difference in the lives of orphaned children.</p>
+            <a href="{% url 'ct' %}" class="cta-button">Get Involved</a>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+
+

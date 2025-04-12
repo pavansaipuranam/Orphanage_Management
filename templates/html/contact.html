@@ -1,0 +1,312 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Teresa Orphanage{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    
+    .contact-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section {
+        position: relative;
+        height: 40vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .contact-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .contact-card {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-icon {
+        font-size: 2.5rem;
+        color: #2a5298;
+        margin-bottom: 20px;
+    }
+
+    .contact-title {
+        font-size: 1.5rem;
+        color: #2a5298;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .contact-text {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .team-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+
+    .team-card {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .team-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .team-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 20px;
+        border: 5px solid #2a5298;
+    }
+
+    .team-name {
+        font-size: 1.5rem;
+        color: #2a5298;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .team-role {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .team-contact {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .social-section {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .social-title {
+        font-size: 2rem;
+        color: #2a5298;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .social-text {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .social-icon {
+        font-size: 2rem;
+        color: #2a5298;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #1e3c72;
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+
+        .contact-grid, .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-image {
+            width: 150px;
+            height: 150px;
+        }
+    }
+</style>
+
+<div class="contact-container">
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Contact Us</h1>
+            <p class="hero-subtitle">Get in touch with us to learn more about our mission and how you can help</p>
+        </div>
+    </div>
+
+    <div class="contact-section">
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="fa fa-map-marker contact-icon"></i>
+                <h3 class="contact-title">Address</h3>
+                <p class="contact-text">
+                    2-3/3, 5th street, kothapeta,<br>
+                    Old Bommuru Road,<br>
+                    Rajamundry,<br>
+                    533103 (Near Aryapuram)
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <i class="fa fa-envelope contact-icon"></i>
+                <h3 class="contact-title">Office Hours</h3>
+                <p class="contact-text">
+                    Monday – Saturday<br>
+                    8am to 5pm IST<br>
+                    Rajamundry NH-16
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <i class="fa fa-phone contact-icon"></i>
+                <h3 class="contact-title">Phone</h3>
+                <p class="contact-text">
+                    +91 88869 81258<br>
+                    +91 96032 79543
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="team-section">
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="{% static 'images/pavansai.jpg' %}" alt="Purnam Pavan Sai" class="team-image">
+                <h3 class="team-name">Mr. Purnam Pavan Sai</h3>
+                <p class="team-role">Founder</p>
+                <p class="team-contact">
+                    +91 8886981258<br>
+                    theresaorphanage@gmail.com
+                </p>
+            </div>
+
+            <div class="team-card">
+                <img src="{% static 'images/mani.jpg' %}" alt="Sathi Manikanta Bhaskar Reddy" class="team-image">
+                <h3 class="team-name">Mr. Sathi Manikanta Bhaskar Reddy</h3>
+                <p class="team-role">Co-Founder</p>
+                <p class="team-contact">
+                    +91 96032 79543<br>
+                    manikanta015@gmail.com
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="social-section">
+        <h2 class="social-title">Get Connected</h2>
+        <p class="social-text">
+            We are a movement of individuals working together to change the world.<br>
+            2023 - THE WORLD'S ORPHANAGE ASSOCIATION | ALL RIGHTS RESERVED
+        </p>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fa fa-facebook-square"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-whatsapp"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-twitter-square"></i></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
